@@ -26,5 +26,5 @@ protected:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	virtual void SetupWeapon(AActor* newOwner, UCameraComponent* cameraComp);
+	virtual void setupWeapon(AActor* newOwner, UCameraComponent* cameraComp);
 };

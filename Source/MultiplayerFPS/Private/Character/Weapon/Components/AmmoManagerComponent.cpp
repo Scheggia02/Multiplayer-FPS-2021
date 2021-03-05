@@ -17,12 +17,24 @@ void UAmmoManagerComponent::BeginPlay()
 
 bool UAmmoManagerComponent::canFire() const
 { 
-	return currentMagazineAmmo > 0; 
+	return currentMagazineAmmo >= ammoFiredPerShot;
 }
 
 bool UAmmoManagerComponent::canReload() const
 { 
 	const uint16 missingAmmo = (uint16) (magazineSize - currentMagazineAmmo);
 
-	return currentStockpileAmmo - missingAmmo > 0;
+	return currentStockpileAmmo > 0 && missingAmmo > 0;
+}
+
+void UAmmoManagerComponent::shootAmmo()
+{
+	currentMagazineAmmo -= ammoFiredPerShot;
+}
+
+void UAmmoManagerComponent::reloadAmmo()
+{
+	const uint16 missingAmmo = (uint16)(magazineSize - currentMagazineAmmo);
+	currentStockpileAmmo -= missingAmmo;
+	currentMagazineAmmo = magazineSize;
 }

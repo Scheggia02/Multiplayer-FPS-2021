@@ -28,15 +28,22 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stats")
 	bool shouldStockpileStartFilled;
 
-private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stats")
+	int32 ammoFiredPerShot;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
 	int32 currentMagazineAmmo;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
 	int32 currentStockpileAmmo;
 
 protected:
 	virtual void BeginPlay() override;
 
-
 public:	
 	bool canFire() const;
 	bool canReload() const;
+
+	void shootAmmo();
+	void reloadAmmo();
 };

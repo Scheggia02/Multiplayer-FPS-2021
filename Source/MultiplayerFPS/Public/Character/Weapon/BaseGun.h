@@ -36,13 +36,17 @@ protected:
 	FCollisionQueryParams queryParams;
 
 protected:
-	virtual void Fire() PURE_VIRTUAL(ABaseGun::Fire, );
-	virtual void SpawnFireEffects() PURE_VIRTUAL(ABaseGun::SpawnFireEffects, );
+	virtual void fire(bool& hitSomething, FHitResult& hitResult) PURE_VIRTUAL(ABaseGun::fire, );
+	virtual void reload() PURE_VIRTUAL(ABaseGun::reload, );
+
+	virtual void spawnFireEffects() PURE_VIRTUAL(ABaseGun::spawnFireEffects, );
+	virtual void spawnReloadEffects() PURE_VIRTUAL(ABaseGun::spawnReloadEffects, );
+
 	//virtual void StartFiring() PURE_VIRTUAL(ABaseGun::StartFire, );
 	//virtual void StopFiring() PURE_VIRTUAL(ABaseGun::StopFire, );
 
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void SetupWeapon(AActor* newOwner, UCameraComponent* cameraComp) override;
+	virtual void setupWeapon(AActor* newOwner, UCameraComponent* cameraComp) override;
 };

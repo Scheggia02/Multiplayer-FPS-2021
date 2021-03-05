@@ -1,12 +1,13 @@
 #include "Character/Weapon/SingleFireGun.h"
 #include "Camera/CameraComponent.h"
+#include "Character/Weapon/Components/AmmoManagerComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-void ASingleFireGun::Fire()
+void ASingleFireGun::fire(bool& hitSomething, FHitResult& hitResult)
 {
-	if (playerCameraComp == nullptr || gunRange == 0.0f)//Check if the player's camera or the gunRange is null, if it is, return!
+	if (playerCameraComp == nullptr || gunRange == 0.0f || !ammoManagerComp->canFire()) //Check if the stats are valid, otherwise return!
 	{
-		UE_LOG(LogTemp, Log, TEXT("Can't fire"));
+		UE_LOG(LogTemp, Log, TEXT("CAN'T FIRE"));
 		return;
 	}
 
@@ -14,20 +15,38 @@ void ASingleFireGun::Fire()
 	FVector endLoc = startLoc + (playerCameraComp->GetForwardVector() * gunRange); //Trace's end location
 
 	FHitResult hit;
+	hitSomething = GetWorld()->LineTraceSingleByChannel(hit, startLoc, endLoc, ECollisionChannel::ECC_Visibility, queryParams);
 
-	bool bHit = GetWorld()->LineTraceSingleByChannel(hit, startLoc, endLoc, ECollisionChannel::ECC_Visibility, queryParams); 
-
-	if (bHit) // if we hit something
+	if (hitSomething) // if we hit something
 	{
 		UE_LOG(LogTemp, Log, TEXT("Hit something")); 
+		hitResult = hit;
 	}
 
-	SpawnFireEffects();
+	ammoManagerComp->shootAmmo();
+
+	spawnFireEffects();
 	UKismetSystemLibrary::DrawDebugLine(this, startLoc, endLoc, FLinearColor::Blue, 1.5f, 1.0f);
 
 }
 
-void ASingleFireGun::SpawnFireEffects()
+void ASingleFireGun::reload()
+{
+	if (playerCameraComp == nullptr || gunRange == 0.0f || !ammoManagerComp->canReload()) //Check if the stats are valid, otherwise return!
+	{
+		UE_LOG(LogTemp, Log, TEXT("CAN'T RELOAD"));
+		return;
+	}
+
+	ammoManagerComp->reloadAmmo();
+
+}
+
+void ASingleFireGun::spawnFireEffects()
+{
+}
+
+void ASingleFireGun::spawnReloadEffects()
 {
 }
 

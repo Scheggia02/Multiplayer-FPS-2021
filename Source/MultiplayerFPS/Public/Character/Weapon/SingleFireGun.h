@@ -15,6 +15,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
-	virtual void Fire() override;
-	virtual void SpawnFireEffects() override;
+	virtual void fire(bool& hitSomething, FHitResult& hitResult) override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void reload() override;
+
+	virtual void spawnFireEffects() override;
+	virtual void spawnReloadEffects() override;
 };

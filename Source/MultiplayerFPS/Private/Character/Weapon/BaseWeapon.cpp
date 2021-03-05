@@ -18,7 +18,7 @@ void ABaseWeapon::BeginPlay()
 	
 }
 
-void ABaseWeapon::SetupWeapon(AActor* owner, UCameraComponent* cameraComp)
+void ABaseWeapon::setupWeapon(AActor* owner, UCameraComponent* cameraComp)
 {
 	SetOwner(owner);
 }
