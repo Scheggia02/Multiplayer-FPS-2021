@@ -28,9 +28,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stats")
 	bool shouldStockpileStartFilled;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stats")
-	int32 ammoFiredPerShot;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
 	int32 currentMagazineAmmo;
 

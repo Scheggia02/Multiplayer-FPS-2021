@@ -7,6 +7,7 @@
 #include "BaseGun.generated.h"
 
 class UAmmoManagerComponent;
+class UFiringModeManager;
 class UCameraComponent;
 
 UCLASS(Abstract)
@@ -22,6 +23,9 @@ protected:
 	UCameraComponent* playerCameraComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UFiringModeManager* firingModeManager;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAmmoManagerComponent* ammoManagerComp;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Gun Stats")
@@ -34,19 +38,25 @@ protected:
 	float headShotDamageMultiplier;
 
 	FCollisionQueryParams queryParams;
+	bool isFiring;
 
 protected:
-	virtual void fire(bool& hitSomething, FHitResult& hitResult) PURE_VIRTUAL(ABaseGun::fire, );
-	virtual void reload() PURE_VIRTUAL(ABaseGun::reload, );
+	virtual void startFiring() {};
+	virtual void stopFiring() {};
 
-	virtual void spawnFireEffects() PURE_VIRTUAL(ABaseGun::spawnFireEffects, );
-	virtual void spawnReloadEffects() PURE_VIRTUAL(ABaseGun::spawnReloadEffects, );
+	virtual void reload() {};
+	virtual void startReloading() {};
+	virtual void stopReloading() {};
 
-	//virtual void StartFiring() PURE_VIRTUAL(ABaseGun::StartFire, );
-	//virtual void StopFiring() PURE_VIRTUAL(ABaseGun::StopFire, );
+	virtual void spawnFireEffects() {};
+	virtual void spawnReloadEffects() {};
 
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void setupWeapon(AActor* newOwner, UCameraComponent* cameraComp) override;
+
+public:
+	virtual void fire() {};
+
 };

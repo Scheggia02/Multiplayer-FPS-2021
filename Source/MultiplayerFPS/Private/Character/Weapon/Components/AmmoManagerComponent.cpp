@@ -17,7 +17,7 @@ void UAmmoManagerComponent::BeginPlay()
 
 bool UAmmoManagerComponent::canFire() const
 { 
-	return currentMagazineAmmo >= ammoFiredPerShot;
+	return currentMagazineAmmo >= 1;
 }
 
 bool UAmmoManagerComponent::canReload() const
@@ -29,12 +29,20 @@ bool UAmmoManagerComponent::canReload() const
 
 void UAmmoManagerComponent::shootAmmo()
 {
-	currentMagazineAmmo -= ammoFiredPerShot;
+	currentMagazineAmmo -= 1;
 }
 
 void UAmmoManagerComponent::reloadAmmo()
 {
 	const uint16 missingAmmo = (uint16)(magazineSize - currentMagazineAmmo);
-	currentStockpileAmmo -= missingAmmo;
-	currentMagazineAmmo = magazineSize;
+	if (currentStockpileAmmo - missingAmmo >= 0)
+	{
+		currentStockpileAmmo -= missingAmmo;
+		currentMagazineAmmo += missingAmmo;
+	}
+	else
+	{
+		currentMagazineAmmo += currentStockpileAmmo;
+		currentStockpileAmmo = 0;
+	}
 }

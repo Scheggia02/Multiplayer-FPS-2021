@@ -1,9 +1,13 @@
 #include "Character/Weapon/BaseGun.h"
 #include "Character/Weapon/Components/AmmoManagerComponent.h"
+#include "Character/Weapon/Components/FiringModeManager.h"
 #include "Camera/CameraComponent.h"
 
 ABaseGun::ABaseGun() : gunRange(1.0f), baseDamage(0.0f), headShotDamageMultiplier(1.0f)
 {
+	firingModeManager = CreateDefaultSubobject<UFiringModeManager>(TEXT("FiringModeManagerComponent"));
+	AddOwnedComponent(firingModeManager);
+
 	ammoManagerComp = CreateDefaultSubobject<UAmmoManagerComponent>(TEXT("AmmoManagerComponent"));
 	AddOwnedComponent(ammoManagerComp);
 
